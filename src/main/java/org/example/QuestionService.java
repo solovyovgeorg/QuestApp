@@ -5,7 +5,9 @@ import org.example.exceptions.QuestionNotFoundException;
 import org.example.model.Question;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QuestionService {
@@ -23,6 +25,13 @@ public class QuestionService {
             throw new QuestionNotFoundException("Question cannot be empty, check App properties");
         }
         return questions.get(id);
+    }
+    public List<Question> getVatiantsByQuestion(Question question) throws QuestionNotFoundException {
+        List<Question> variants = new ArrayList<>();
+        for (int variant: question.getVariants()) {
+            variants.add(getQuestionById(variant));
+        }
+        return variants;
     }
 
 
