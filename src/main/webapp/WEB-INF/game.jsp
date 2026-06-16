@@ -86,23 +86,15 @@
 <body>
 
 <div class="card">
-
-    <h1>Дело №17</h1>
-
+    <h1>Дело №34</h1>
     <div class="subtitle">
-        ${sessionScope.playerName}, вы ведёте расследование
+       Расследование ведет детектив: ${sessionScope.playerName}.
     </div>
-
-    <div class="meta">
-        Текущая сцена: ${question.id}
-    </div>
-
     <p>
         ${question.text}
     </p>
-
     <p>
-        ${question.descriptionAction}
+        ${question.description}
     </p>
 
 <form method="post" action="/game">
@@ -112,7 +104,9 @@
         </button>
     </c:forEach>
 </form>
-
+<form method="post" action="/game">
+<button type=submit name=nextState value=1>Начать заново</button>
+</form>
 </div>
 
 </body>

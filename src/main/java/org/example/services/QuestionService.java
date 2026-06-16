@@ -1,4 +1,4 @@
-package org.example;
+package org.example.services;
 import org.example.config.ConfigLoader;
 import org.example.dto.Config;
 import org.example.exceptions.QuestionNotFoundException;
