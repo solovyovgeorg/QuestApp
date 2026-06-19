@@ -86,28 +86,16 @@
 <body>
 
 <div class="card">
-    <h1>Дело №34</h1>
+    <h1>Ошибки выполнения приложения</h1>
     <div class="subtitle">
-       Расследование ведет детектив: ${sessionScope.playerName}.
+       Возникла следующая ошибка при выполнении приложения:
     </div>
-    <p>
-        ${question.text}
-    </p>
-    <p>
-        ${question.description}
-    </p>
+    <p> ${error}</p>
 
-<form method="post" action="/QuestApp/game">
-    <c:forEach var="v" items="${variants}">
-        <button type="submit" name="nextState" value="${v.id}">
-            ${v.title}
-        </button>
-    </c:forEach>
-</form>
-<form method="get" action="/QuestApp">
-<button type=submit>Начать заново</button>
+
+<form method="get" action="/QuestApp/">
+<button type=submit >На главную</button>
 </form>
 </div>
-
 </body>
 </html>

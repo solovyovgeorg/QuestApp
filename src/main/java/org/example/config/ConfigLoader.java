@@ -16,12 +16,12 @@ public class ConfigLoader<T> {
     }
 
     public void loadFromFile(String fileName) throws IOException {
-        try ( InputStream is = getClass().getClassLoader().getResourceAsStream(fileName)) {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(fileName)) {
             config = jsonMapper.readValue(is, type);
         }
     }
 
-    public T getConfig(){
+    public T getConfig() {
         return this.config;
     }
 }

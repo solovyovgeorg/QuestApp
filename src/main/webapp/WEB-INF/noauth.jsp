@@ -86,28 +86,15 @@
 <body>
 
 <div class="card">
-    <h1>Дело №34</h1>
+    <h1>Ошибка авторизации</h1>
     <div class="subtitle">
-       Расследование ведет детектив: ${sessionScope.playerName}.
+       Вы не авторизованы, пожалуйста авторизуйтесь на главной странице.
     </div>
-    <p>
-        ${question.text}
-    </p>
-    <p>
-        ${question.description}
-    </p>
 
-<form method="post" action="/QuestApp/game">
-    <c:forEach var="v" items="${variants}">
-        <button type="submit" name="nextState" value="${v.id}">
-            ${v.title}
-        </button>
-    </c:forEach>
-</form>
-<form method="get" action="/QuestApp">
-<button type=submit>Начать заново</button>
+
+<form method="get" action="/QuestApp/">
+<button type=submit >На главную страницу</button>
 </form>
 </div>
-
 </body>
 </html>

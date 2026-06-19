@@ -1,4 +1,5 @@
 package org.example.services;
+
 import org.example.config.ConfigLoader;
 import org.example.dto.Config;
 import org.example.exceptions.QuestionNotFoundException;
@@ -14,7 +15,9 @@ public class QuestionService {
     private Map<Integer, Question> questions;
 
     public QuestionService() {
+
         questions = new HashMap<>();
+        initByConfig(new Config());
     }
 
     public Question getQuestionById(int id) throws QuestionNotFoundException {
@@ -26,22 +29,23 @@ public class QuestionService {
         }
         return questions.get(id);
     }
+
     public List<Question> getVatiantsByQuestion(Question question) throws QuestionNotFoundException {
         List<Question> variants = new ArrayList<>();
-        for (int variant: question.getVariants()) {
+        for (int variant : question.getVariants()) {
             variants.add(getQuestionById(variant));
         }
         return variants;
     }
 
 
-    public void initByConfig(Config config) {
+    private void initByConfig(Config config) {
         ConfigLoader loader = new ConfigLoader(config.getClass());
         try {
             loader.loadFromFile("config.json");
             config = (Config) loader.getConfig();
             questions.putAll(config.getQuestionsMap());
-        }  catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
