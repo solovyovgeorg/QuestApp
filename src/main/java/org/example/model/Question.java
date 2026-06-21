@@ -34,4 +34,5 @@ public class Question {
     public int[] getVariants() {
         return variants;
     }
+
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.io.IOException;
 import java.io.InputStream;
 
+/** Предназначен для загрузки конфигурации из json в конкретный Class type*/
 public class ConfigLoader<T> {
     private final Class<T> type;
     private T config;
@@ -15,12 +16,14 @@ public class ConfigLoader<T> {
         this.jsonMapper = new JsonMapper();
     }
 
+    /** Метод для загрузки данных json из fileName*/
     public void loadFromFile(String fileName) throws IOException {
         try (InputStream is = getClass().getClassLoader().getResourceAsStream(fileName)) {
             config = jsonMapper.readValue(is, type);
         }
     }
 
+    /** После загрузки из файла возвращает заполненный класс конфигурации определенный при инициализации в конструкторе*/
     public T getConfig() {
         return this.config;
     }

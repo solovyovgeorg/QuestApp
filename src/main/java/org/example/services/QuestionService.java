@@ -1,53 +1,28 @@
 package org.example.services;
 
-import org.example.config.ConfigLoader;
-import org.example.dto.Config;
-import org.example.exceptions.QuestionNotFoundException;
+import data.QuestionRepository;
+import org.example.exceptions.QuestAppException;
 import org.example.model.Question;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+
+/** Сервис не работает с данными напрямую, делегирует запросы данных репозиторию*/
 public class QuestionService {
-    private Map<Integer, Question> questions;
+    private QuestionRepository repository;
 
-    public QuestionService() {
-
-        questions = new HashMap<>();
-        initByConfig(new Config());
+    public QuestionService(QuestionRepository repository) {
+        this.repository = repository;
     }
 
-    public Question getQuestionById(int id) throws QuestionNotFoundException {
-        if (questions.get(id) == null) {
-            throw new QuestionNotFoundException("Question cannot be null");
-        }
-        if (questions.isEmpty()) {
-            throw new QuestionNotFoundException("Question cannot be empty, check App properties");
-        }
-        return questions.get(id);
+    public Question getQuestionById(int id) throws QuestAppException {
+        return repository.getQuestionById(id);
     }
 
-    public List<Question> getVatiantsByQuestion(Question question) throws QuestionNotFoundException {
-        List<Question> variants = new ArrayList<>();
-        for (int variant : question.getVariants()) {
-            variants.add(getQuestionById(variant));
-        }
-        return variants;
+    public List<Question> getVariantsByQuestion(Question question) throws QuestAppException {
+        return repository.getVariantsByQuestion(question);
     }
 
 
-    private void initByConfig(Config config) {
-        ConfigLoader loader = new ConfigLoader(config.getClass());
-        try {
-            loader.loadFromFile("config.json");
-            config = (Config) loader.getConfig();
-            questions.putAll(config.getQuestionsMap());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 }
 

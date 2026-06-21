@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Config {
+public class QuestConfig {
     @JsonProperty("questions")
     private List<QuestionDTO> questionDTOList;
     private Map<Integer, Question> questionMap;
-    public Config (){}
+    public QuestConfig (){}
 
     public Map<Integer,Question> getQuestionsMap() {
         questionMap = new HashMap<>();

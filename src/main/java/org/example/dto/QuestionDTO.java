@@ -2,6 +2,8 @@ package org.example.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+/** Предназначен для переноса данных из json в бин*/
 public class QuestionDTO {
     @JsonProperty("id")
     private int id;
