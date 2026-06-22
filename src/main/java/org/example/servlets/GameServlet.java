@@ -38,6 +38,7 @@ public class GameServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.setCharacterEncoding("UTF-8");
         String path = req.getContextPath();
         if (req.getParameter("restart") != null) {
             HttpSession session = req.getSession();

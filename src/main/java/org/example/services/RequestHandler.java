@@ -32,7 +32,6 @@ public class RequestHandler {
     }
     /** Сохраняет данные имени и текущего gameState при запросах POST в сессию клиента для последующего редиректа в GET /game */
     public void handlePostRequest (HttpServletRequest request) throws UnsupportedEncodingException {
-        request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         if (request.getParameter("nextState") == null) {
             session.setAttribute("gameState", 1);

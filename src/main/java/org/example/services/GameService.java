@@ -8,7 +8,7 @@ import org.example.model.Question;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/** GameService формирует и отдает gameView в зависимости от переданного в него gameState, при получении исключения формирует view с текстом ошибки*/
 public class GameService {
     private QuestionRepository repository;
     private final String GAME_TITLE_TEXT = "КВЕСТ";
@@ -21,10 +21,10 @@ public class GameService {
         this.repository = repository;
     }
 
-    public GameView getGameViewByState(int state) {
+    public GameView getGameViewByState(int gameState) {
        GameView gameView = new GameView();
        try {
-           Question question = repository.getQuestionById(state);
+           Question question = repository.getQuestionById(gameState);
            gameView.setTitle_text(GAME_TITLE_TEXT);
            gameView.setH1_text(GAME_H1_TEXT);
            gameView.setSubtitle_text(GAME_SUBTITLE);
