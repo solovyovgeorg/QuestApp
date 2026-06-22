@@ -2,8 +2,7 @@ package org.example.servlets;
 
 import data.QuestionRepositoryImpl;
 import org.example.services.ClientState;
-import org.example.exceptions.QuestAppException;
-import org.example.services.QuestionService;
+import org.example.services.GameService;
 import org.example.services.RequestHandler;
 
 import javax.servlet.ServletException;
@@ -11,12 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/game")
 public class GameServlet extends HttpServlet {
 
-    private RequestHandler requestHandler = new RequestHandler(new QuestionService(new QuestionRepositoryImpl()));
+    private RequestHandler requestHandler = new RequestHandler(new GameService(new QuestionRepositoryImpl()));
 
 
     @Override
@@ -27,16 +27,10 @@ public class GameServlet extends HttpServlet {
         switch (clientState) {
 
             case NO_ACCESS_CLIENT:
-                req.getRequestDispatcher("/WEB-INF/noauth.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/noauth.html").forward(req, resp);
                 return;
             case ACCESS_CLIENT: {
-                try {
-                    requestHandler.editRequest(req);
-                } catch (QuestAppException e) {
-                    req.setAttribute("error", e.getMessage());
-                    req.getRequestDispatcher("/WEB-INF/errors.jsp").forward(req, resp);
-                    return;
-                }
+                requestHandler.handleGetRequest(req);
                 req.getRequestDispatcher("/WEB-INF/game.jsp").forward(req, resp);
             }
         }
@@ -44,8 +38,14 @@ public class GameServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-                String path = req.getContextPath();
-                requestHandler.editSession(req);
-                resp.sendRedirect(path + "/game");
+        String path = req.getContextPath();
+        if (req.getParameter("restart") != null) {
+            HttpSession session = req.getSession();
+            session.invalidate();
+            resp.sendRedirect(path);
+            return;
+        }
+        requestHandler.handlePostRequest(req);
+        resp.sendRedirect(path + "/game");
     }
 }

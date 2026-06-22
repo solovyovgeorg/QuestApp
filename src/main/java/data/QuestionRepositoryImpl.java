@@ -30,14 +30,6 @@ public class QuestionRepositoryImpl implements QuestionRepository{
         return questionMap.get(id);
     }
 
-    @Override
-    public List<Question> getVariantsByQuestion(Question question) {
-        List<Question> variants = new ArrayList<>();
-        for (int id : question.getVariants()) {
-            variants.add(questionMap.get(id));
-        }
-        return variants;
-    }
     private void initByConfig(QuestConfig config) throws RuntimeException {
         ConfigLoader loader = new ConfigLoader(config.getClass());
         try {

@@ -5,7 +5,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Квест</title>
+    <title>${gameview.title_text}</title>
 
     <style>
         body {
@@ -86,25 +86,26 @@
 <body>
 
 <div class="card">
-    <h1>Дело №34</h1>
+    <h1>${gameview.h1_text}</h1>
     <div class="subtitle">
-       Расследование ведет детектив: ${sessionScope.playerName}.
+       ${gameview.subtitle_text} ${sessionScope.playerName}.
     </div>
     <p>
-        ${question.text}
+        ${gameview.maintext}
     </p>
     <p>
-        ${question.description}
+        ${gameview.description}
     </p>
 
 <form method="post" action="/QuestApp/game">
-    <c:forEach var="v" items="${variants}">
-        <button type="submit" name="nextState" value="${v.id}">
-            ${v.title}
+    <c:forEach var="choice" items="${gameview.choices}">
+        <button type="submit" name="nextState" value="${choice.questionId}">
+            ${choice.title}
         </button>
     </c:forEach>
 </form>
-<form method="get" action="/QuestApp">
+<form method="post" action="/QuestApp/game">
+ <input type="hidden" name="restart" value="1">
 <button type=submit>Начать заново</button>
 </form>
 </div>
